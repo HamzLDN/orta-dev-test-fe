@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import CreateShiftBtn from "./Button/Button.jsx";
 import TokenContext from '../../context/TokenContext.js';
-import { Padding } from '@mui/icons-material';
-
+import SubmitShifts from '../../components/Forms/submit_shifts.js';
+import React, { useContext, useState } from 'react';
 function Header() {
     const [showOverlay, setShowOverlay] = useState(false);
     const token = localStorage.getItem('authToken');
@@ -24,7 +24,7 @@ function Header() {
         left: '50%',
         width: '70%',
         height: '60%',
-        backgroundColor: 'rgba(0, 0, 0)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         transform: 'translate(-50%, -50%)',
         Padding: '20px',
     };
@@ -45,9 +45,11 @@ function Header() {
                     {token ? (
                         <>
                             <CreateShiftBtn onClick={toggleOverlay} />
-
+                        
                             {showOverlay && (
-                                <div style={overlayStyles} onClick={toggleOverlay}></div>
+                                <div style={overlayStyles} onClick={toggleOverlay}>
+                                    <SubmitShifts />
+                                </div>
                             )}
 
                             <span className="text-sm text-gray-700">
