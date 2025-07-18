@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import CreateShiftBtn from "./Button/Button.jsx";
 import TokenContext from '../../context/TokenContext.js';
-import './header.css';
+import { Padding } from '@mui/icons-material';
 
 function Header() {
+    const [showOverlay, setShowOverlay] = useState(false);
     const token = localStorage.getItem('authToken');
     const { user } = useContext(TokenContext);
 
@@ -12,10 +14,24 @@ function Header() {
         window.location.href = '/login';
     };
 
+    const toggleOverlay = () => {
+        setShowOverlay(prev => !prev);
+    };
+
+    const overlayStyles = {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        width: '70%',
+        height: '60%',
+        backgroundColor: 'rgba(0, 0, 0)',
+        transform: 'translate(-50%, -50%)',
+        Padding: '20px',
+    };
+
     return (
         <div>
             <nav className="bg-blue-50 border-b border-blue-100 shadow-sm px-6 py-4 flex justify-between items-center">
-                {/* App Logo */}
                 <div className="text-2xl font-bold tracking-wide">
                     <Link
                         to="/"
@@ -25,14 +41,22 @@ function Header() {
                     </Link>
                 </div>
 
-                {/* Navigation / Auth Buttons */}
                 <div className="flex items-center gap-4">
                     {token ? (
                         <>
+                            <CreateShiftBtn onClick={toggleOverlay} />
+
+                            {showOverlay && (
+                                <div style={overlayStyles} onClick={toggleOverlay}></div>
+                            )}
+
                             <span className="text-sm text-gray-700">
                                 Welcome,&nbsp;
-                                <span className="font-semibold text-blue-700 capitalize">{user?.name}</span>
+                                <span className="font-semibold text-blue-700 capitalize">
+                                    {user?.name}
+                                </span>
                             </span>
+
                             <button
                                 onClick={logout}
                                 className="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-full transition"
