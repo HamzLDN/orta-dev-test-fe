@@ -22,7 +22,7 @@ function Header() {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        width: '20%',
+        width: '40%',
         height: '60%',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         transform: 'translate(-50%, -50%)',
