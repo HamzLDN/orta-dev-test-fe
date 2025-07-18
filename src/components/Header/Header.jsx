@@ -22,11 +22,13 @@ function Header() {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        width: '70%',
+        width: '20%',
         height: '60%',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         transform: 'translate(-50%, -50%)',
         Padding: '20px',
+        overflowY: 'auto',
+
     };
 
     return (
