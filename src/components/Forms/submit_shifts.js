@@ -12,8 +12,7 @@ const data_to_submit = {
     date: "Date"
 }
 export default function SubmitShifts() {
-  const [shifts, setShifts] = useState([]);
-  const [showOverlay, setShowOverlay] = useState(false);
+const [setShowOverlay] = useState(false);
   const [formData, setFormData] = useState(data_to_submit);
 
 
@@ -36,6 +35,7 @@ export default function SubmitShifts() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // sending JSON
+          'Authorization': `Bearer ${localStorage.getItem('authToken').replace(/^"|"$/g, '')}`, // forgot to send the tokens (finally fixed my issue)
         },
         body: JSON.stringify(formData),
       });
