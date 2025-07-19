@@ -27,7 +27,28 @@ function getShiftStatus(startTime, finishTime, date) {
 }
 
 
+
 export default function Shifts() {
+  function modifyshifts(id) {
+    // on click if user clicks on delete send to endpoint /api/shifts:id
+  
+    fetch(`http://localhost:8000/api/shifts/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("authToken").replace(/^"|"$/g, '')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Shift deleted:", data);
+        Shifts();
+      })
+      .catch((error) => {
+        console.error("Error deleting shift:", error);
+      });
+    
+  }
   const { userToken, user } = useContext(TokenContext);
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -84,6 +105,7 @@ export default function Shifts() {
               <th>Location</th>
               <th>Post Code</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
             
             {shifts.map((shift) => (
@@ -100,7 +122,27 @@ export default function Shifts() {
                     <div style={{padding: "5px", backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
-                  <td>Modify</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        // Handle edit shift
+                        console.log("Edit shift:", shift._id);
+                      }}
+                      style={{ marginRight: "0.5rem", backgroundColor: "#4CAF50", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        // Handle delete shift
+                        {modifyshifts(shift._id)}
+                        console.log("Delete shift:", shift._id);
+                      }}
+                      style={{ backgroundColor: "#f44336", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               
             ))}
