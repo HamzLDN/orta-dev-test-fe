@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "../../Axios/axios"; // your configured instance
 import TokenContext from "../../context/TokenContext";
+import Table from "./Table/Table.module.css"; 
 
 export default function Shifts() {
   const { userToken, user } = useContext(TokenContext);
@@ -51,19 +52,35 @@ export default function Shifts() {
       {shifts.length === 0 ? (
         <p>No shifts found.</p>
       ) : (
-        <ul>
-          {shifts.map((shift) => (
-            <li key={shift._id} style={{ marginBottom: "1rem" }}>
-              <strong>{shift.title || "Shift"}</strong> on{" "}
-              {new Date(shift.date).toLocaleDateString()}
-              <br />
-              {shift.startTime} – {shift.finishTime}
-              <br />
-              {shift.location?.name}{" "}
-              {shift.location?.postCode ? `(${shift.location.postCode})` : ""}
-            </li>
-          ))}
-        </ul>
+          <div>
+          <table style={Table}>
+            <tr>
+              <th>SHIFT TITLE</th>
+              <th>Date</th> 
+              <th>Start</th>
+              <th>Finish</th>
+              <th>Location</th>
+              <th>Post Code</th>
+              <th>Status</th>
+            </tr>
+            
+            {shifts.map((shift) => (
+              
+                <tr key={shift._id} style={{ marginBottom: "1rem"}}>
+                  <td><strong>{shift.title || "Shift"}</strong> on{" "}</td>
+                  <td>{new Date(shift.date).toLocaleDateString()}</td>
+                  <td>{shift.startTime}</td>
+                  <td>{shift.finishTime}</td>
+
+                  <td>{shift.location?.name}{" "}</td>
+                  <td>{shift.location?.postCode ? `(${shift.location.postCode})` : ""}</td>
+                  <td></td>
+                </tr>
+              
+            ))}
+            
+          </table>
+          </div>
       )}
     </div>
   );
