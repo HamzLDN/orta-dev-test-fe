@@ -4,11 +4,9 @@ const data_to_submit = {
     title: "text",
     role: "text",
     typeOfShift: "text",
-    user: "text",
     startTime: "text",
     finishTime: "text",
     numOfShiftsPerDay: "number",
-    location: "text",
     date: "date"
 };
 
@@ -74,9 +72,23 @@ const [setShowOverlay] = useState(false);
             onSubmit={handleSubmit}
             className="shift-form"
           >
+            <br/>
             <h2 style={{color: 'white'}}>Create Shift</h2>
+            <br/>
+            <div style={FormStyle}>
+            <h2 style={{color: 'white'}}>Location</h2>
+            <select name="location" id="location" required>
+                <option value="">Locations</option>
+                <option value="The Willow">The Willow</option>
+                <option value="Manchester Piccadilly Station">Manchester Piccadilly Station</option>
+                <option value="MediaCityUK">MediaCityUK</option>
+                <option value="Clippers House, Clippers Quay">Clippers House, Clippers Quay</option>
+                <option value="Old Trafford Stadium">Old Trafford Stadium</option>
+            </select>
+            </div>
+            
             {Object.entries(formData).map(([key, type]) => (
-                
+            
             <div style={FormStyle}>
                 <script>console.log({type})</script>
                 <label>
@@ -92,9 +104,10 @@ const [setShowOverlay] = useState(false);
                 <br />
             </div>
             ))}
+
             
 
-            <button type="submit">Submit</button>
+            <button style={{backgroundColor: 'white', padding: '10px'}} type="submit">Submit</button>
           </form>
         </div>
       )}
