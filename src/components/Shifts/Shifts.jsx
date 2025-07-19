@@ -74,7 +74,7 @@ export default function Shifts() {
 
                   <td>{shift.location?.name}{" "}</td>
                   <td>{shift.location?.postCode ? `(${shift.location.postCode})` : ""}</td>
-                  <td></td>
+                   <td></td> {/* STATUS WLL BE EITHER pending inprogress complete */}
                 </tr>
               
             ))}
