@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "../../Axios/axios"; // your configured instance
 import TokenContext from "../../context/TokenContext";
 import Table from "./Table/Table.module.css"; 
+import deleteShift from "../crud/delete"
 
 function getShiftStatus(startTime, finishTime, date) {
   const now = new Date();
@@ -29,25 +30,16 @@ function getShiftStatus(startTime, finishTime, date) {
 
 
 export default function Shifts() {
-  function modifyshifts(id) {
+  function modifyshifts(id, method) {
     // on click if user clicks on delete send to endpoint /api/shifts:id
-  
-    fetch(`http://localhost:8000/api/shifts/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("authToken").replace(/^"|"$/g, '')}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Shift deleted:", data);
-        Shifts();
-      })
-      .catch((error) => {
-        console.error("Error deleting shift:", error);
-      });
-    
+    if (method==="delete") {
+      deleteShift(id)
+      setShifts(prevShifts => prevShifts.filter(shift => shift._id !== id));
+      
+    } else if (method==="edit") {
+      console.log("Edit shift:", id);
+      // Handle edit logic here, e.g., open a modal with a form to edit the shift
+    }
   }
   const { userToken, user } = useContext(TokenContext);
   const [shifts, setShifts] = useState([]);
@@ -126,7 +118,9 @@ export default function Shifts() {
                     <button
                       onClick={() => {
                         // Handle edit shift
-                        console.log("Edit shift:", shift._id);
+                       
+                        {modifyshifts(shift._id, "edit")}
+                        console.log("Shifts edited", shift._id);
                       }}
                       style={{ marginRight: "0.5rem", backgroundColor: "#4CAF50", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
                     >
@@ -135,7 +129,7 @@ export default function Shifts() {
                     <button
                       onClick={() => {
                         // Handle delete shift
-                        {modifyshifts(shift._id)}
+                        {modifyshifts(shift._id, "delete")}
                         console.log("Delete shift:", shift._id);
                       }}
                       style={{ backgroundColor: "#f44336", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
