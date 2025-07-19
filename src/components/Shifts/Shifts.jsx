@@ -21,9 +21,9 @@ function getShiftStatus(startTime, finishTime, date) {
   const start = new Date(year, month, day, startHour, startMinute);
   const end = new Date(year, month, day, endHour, endMinute);
 
-  if (now < start) return "Pending";
-  if (now >= start && now <= end) return "In Progress";
-  return "Complete";
+  if (now < start) return {'status': 'Pending', 'colour': 'blue'}
+  if (now >= start && now <= end) return {'status': 'In Progress', 'colour': 'lightgreen'}
+  return {'status': 'Complete', 'colour': 'black'}
 }
 
 
@@ -96,7 +96,10 @@ export default function Shifts() {
 
                   <td>{shift.location?.name}{" "}</td>
                   <td>{shift.location?.postCode ? `(${shift.location.postCode})` : ""}</td>
-                  <td>{getShiftStatus(shift.startTime, shift.finishTime, shift.date)}</td> {/* STATUS WLL BE EITHER pending inprogress complete */}
+                  <td>{getShiftStatus(shift.startTime, shift.finishTime, shift.date).status}
+                    <div style={{padding: "5px", backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
+                  </td>
+                  {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>Modify</td>
                 </tr>
               
