@@ -1,20 +1,20 @@
 import { useState } from 'react';
 
 const data_to_submit = {
-    title: "String",
-    role: "String",
-    typeOfShift: "String",
-    user: "String",
-    startTime: "String",
-    finishTime: "String",
-    numOfShiftsPerDay: "Number",
-    location: "String",
-    date: "Date"
-}
+    title: "text",
+    role: "text",
+    typeOfShift: "text",
+    user: "text",
+    startTime: "text",
+    finishTime: "text",
+    numOfShiftsPerDay: "number",
+    location: "text",
+    date: "date"
+};
+
 export default function SubmitShifts() {
 const [setShowOverlay] = useState(false);
   const [formData, setFormData] = useState(data_to_submit);
-
 
   const toggleOverlay = () => {
     setShowOverlay(prev => !prev);
@@ -45,7 +45,10 @@ const [setShowOverlay] = useState(false);
         toggleOverlay();
         setFormData(data_to_submit);
       } else {
-        alert('Failed to create shift');
+        res.json().then(data => {
+            alert(data.message);
+        });
+        
       }
     } catch (err) {
       console.error('POST error:', err);
