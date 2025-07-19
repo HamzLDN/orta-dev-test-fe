@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import createForm from '../crud/create';
 const data_to_submit = {
     title: "text",
     role: "text",
@@ -7,13 +7,15 @@ const data_to_submit = {
     startTime: "text",
     finishTime: "text",
     numOfShiftsPerDay: "number",
-    date: "date"
+    date: "date",
+    location: "",
 };
 
 export default function SubmitShifts() {
-const [setShowOverlay] = useState(false);
-  const [formData, setFormData] = useState(data_to_submit);
+const [showOverlay, setShowOverlay] = useState(false);
 
+  const [formData, setFormData] = useState(data_to_submit);
+    
   const toggleOverlay = () => {
     setShowOverlay(prev => !prev);
   };
@@ -29,25 +31,7 @@ const [setShowOverlay] = useState(false);
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:8000/api/shifts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // sending JSON
-          'Authorization': `Bearer ${localStorage.getItem('authToken').replace(/^"|"$/g, '')}`, // forgot to send the tokens (finally fixed my issue)
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        alert('Shift created!');
-        toggleOverlay();
-        setFormData(data_to_submit);
-      } else {
-        res.json().then(data => {
-            alert(data.message);
-        });
-        
-      }
+        createForm(formData, toggleOverlay, setFormData, data_to_submit);
     } catch (err) {
       console.error('POST error:', err);
     }
@@ -75,9 +59,10 @@ const [setShowOverlay] = useState(false);
             <br/>
             <h2 style={{color: 'white'}}>Create Shift</h2>
             <br/>
+
             <div style={FormStyle}>
             <h2 style={{color: 'white'}}>Location</h2>
-            <select name="location" id="location" required>
+            <select name="location" id="location" value={formData.location} onChange={handleChange} required>
                 <option value="">Locations</option>
                 <option value="The Willow">The Willow</option>
                 <option value="Manchester Piccadilly Station">Manchester Piccadilly Station</option>
@@ -87,23 +72,25 @@ const [setShowOverlay] = useState(false);
             </select>
             </div>
             
-            {Object.entries(formData).map(([key, type]) => (
-            
-            <div style={FormStyle}>
-                <script>console.log({type})</script>
-                <label>
-                <h2 style={{color: 'white'}}>{key}</h2>
-                <input
-                    type={type}
-                    name={key}
-                    onChange={handleChange}
-                    required
-                />
-                
-                </label>
-                <br />
-            </div>
-            ))}
+            {Object.entries(formData).map(([key, type]) => {
+                if (key === "location") return null;
+
+                return (
+                    <div style={FormStyle} key={key}>
+                    <label>
+                        <h2 style={{color: 'white'}}>{key}</h2>
+                        <input
+                        type={type}
+                        name={key}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                    <br />
+                    </div>
+                );
+                })}
+
 
             
 
