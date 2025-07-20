@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import TokenContext from "../../context/TokenContext";
 import createForm from '../crud/create';
 import editForm from '../crud/edit'
-import axios from "../../Axios/axios";
 const defaultForm = {
     location: {
         name: '',
@@ -57,7 +55,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
     try {
         if (method === 'create') {
             await createForm(formData, toggleOverlay, setFormData, formData);
-            window.location.reload(false);
+            // window.location.reload(false);
         } else if (method === 'edit') {
             await editForm(formData, toggleOverlay, setFormData, formData);
             window.location.reload(false);
