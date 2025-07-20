@@ -11,8 +11,9 @@ import Register from "./components/Register";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword";
 import ResetPassword from "./components/forgotPassword/ResetPassword";
 import axios from "./Axios/axios.js";
-import Shifts from "./components/Shifts/Shifts";
+import Shifts from "./components/Shifts/EditShifts/Shifts.jsx";
 
+import ViewShift from "./components/Shifts/ViewShifts/ViewShifts.jsx";
 function App() {
   const storedToken = JSON.parse(localStorage.getItem("authToken"));
   const [userToken, tokenDispatch] = useReducer(tokenReducer, storedToken);
@@ -34,7 +35,6 @@ function App() {
   }, [userToken]);
 
   return (
-    <BrowserRouter>
       <TokenContext.Provider
         value={{ userToken, tokenDispatch, user, userDispatch }}
       >
@@ -62,9 +62,11 @@ function App() {
               element={userToken ? <Navigate to="/" /> : <ResetPassword />}
             />
           </Route>
+            <Route 
+            path="/viewshift" element={<ViewShift />} />
+            
         </Routes>
       </TokenContext.Provider>
-    </BrowserRouter>
   );
 }
 
