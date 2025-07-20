@@ -4,31 +4,19 @@ import CreateShiftBtn from "./Button/Button.jsx";
 import TokenContext from '../../context/TokenContext.js';
 import SubmitShifts from '../../components/Forms/submit_shifts.js';
 import React, { useContext, useState } from 'react';
+import "../Shifts/overlay.css"
 function Header() {
     const [showOverlay, setShowOverlay] = useState(false);
+    const toggleOverlay = () => {
+        console.log(showOverlay);
+        setShowOverlay(prev => !prev);
+      };
     const token = localStorage.getItem('authToken');
     const { user } = useContext(TokenContext);
 
     const logout = () => {
         localStorage.removeItem('authToken');
         window.location.href = '/login';
-    };
-
-    const toggleOverlay = () => {
-        setShowOverlay(prev => !prev);
-    };
-
-    const overlayStyles = {
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        width: '40%',
-        height: '60%',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        transform: 'translate(-50%, -50%)',
-        Padding: '20px',
-        overflowY: 'auto',
-
     };
 
     return (
@@ -49,10 +37,12 @@ function Header() {
                             <CreateShiftBtn onClick={toggleOverlay} />
                         
                             {showOverlay && (
-                                <div style={overlayStyles} onClick={toggleOverlay}>
-                                    <SubmitShifts />
-                                </div>
-                            )}
+                                    <div className='overlay' onClick={toggleOverlay}>
+                                    <div onClick={e => e.stopPropagation()}>
+                                        <SubmitShifts method="create" onClose={toggleOverlay} />
+                                    </div>
+                                    </div>
+                                )}
 
                             <span className="text-sm text-gray-700">
                                 Welcome,&nbsp;
