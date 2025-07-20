@@ -34,8 +34,15 @@ function getShiftStatus(startTime, finishTime, date) {
 
 export default function Shifts() {
   const [editShiftId, setEditShiftId] = useState(null);
-  const openOverlay = (id) => setEditShiftId(id);
-  const closeOverlay = () => setEditShiftId(null);
+  const openOverlay = (id) => {
+    setEditShiftId(id);
+    document.body.classList.add('lock-scroll');
+  };
+  
+  const closeOverlay = () => {
+    setEditShiftId(null);
+    document.body.classList.remove('lock-scroll');
+  };
   const [shifts, setShifts] = useState([]);
   function modifyshifts(id, method) {
     // on click if user clicks on delete send to endpoint /api/shifts:id
@@ -129,30 +136,29 @@ export default function Shifts() {
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>
-                    <button 
-                      onClick={() => openOverlay(shift._id)} 
-                      style={{ 
-                        marginRight: "0.5rem", 
-                        backgroundColor: "#4CAF50", 
-                        color: "white", 
-                        border: "none", 
-                        padding: "0.5rem 1rem", 
-                        borderRadius: "4px" 
-                      }}
-                    >
-                      Edit
-                    </button>
-                                            
-                    {editShiftId === shift._id && (
-                      <div className="overlay" onClick={closeOverlay}>
-                        <div onClick={e => e.stopPropagation()}>
-                          <SubmitShifts  method="edit"  onClose={closeOverlay} initialData={shift} 
-                          />
+    
+                      <button 
+                        onClick={() => openOverlay(shift._id)} 
+                        style={{ 
+                          backgroundColor: "#4CAF50", 
+                          color: "white", 
+                          border: "none", 
+                          width: '100%',
+                          padding: "0.5rem 1rem",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        Edit
+                      </button>
+                                              
+                      {editShiftId === shift._id && (
+                        <div className="overlay" onClick={closeOverlay}>
+                          <div onClick={e => e.stopPropagation()}>
+                            <SubmitShifts  method="edit"  onClose={closeOverlay} initialData={shift} 
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
-
-
+                      )}
 
                     <button
                       onClick={() => {
@@ -166,7 +172,7 @@ export default function Shifts() {
                         border: "none", 
                         padding: "0.5rem 1rem", 
                         borderRadius: "4px", 
-                        width: '70%',
+                        width: '100%',
                         display: 'flex',
                         justifyContent: 'center',
                         alignContent: 'center',
@@ -174,13 +180,6 @@ export default function Shifts() {
                     >
                       Delete
                     </button>
-
-
-                    
-                    
-
-
-                    
                     
                   </td>
                   <td>

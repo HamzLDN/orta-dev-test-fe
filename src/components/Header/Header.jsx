@@ -5,11 +5,16 @@ import TokenContext from '../../context/TokenContext.js';
 import SubmitShifts from '../../components/Forms/submit_shifts.js';
 import React, { useContext, useState } from 'react';
 import "../Shifts/overlay.css"
-import ViewShift from '../Shifts/ViewShifts/ViewShifts.jsx';
+
 function Header() {
     const [showOverlay, setShowOverlay] = useState(false);
     const toggleOverlay = () => {
         console.log(showOverlay);
+        if (showOverlay) {
+            document.body.classList.remove('lock-scroll');
+        } else {
+            document.body.classList.add('lock-scroll');
+        }
         setShowOverlay(prev => !prev);
       };
     const token = localStorage.getItem('authToken');
@@ -22,8 +27,8 @@ function Header() {
 
     return (
         <div>
-            <nav className="bg-blue-50 border-b border-blue-100 shadow-sm px-6 py-4 flex justify-between items-center">
-                <div className="text-2xl font-bold tracking-wide">
+            <nav className="bg-blue-50 border-b border-blue-100 shadow-sm px-6 py-4 flex justify-between items-center sticky-nav">
+                <div className="text-2xl font-bold tracking-wid">
                     <Link
                         to="/"
                         className="text-blue-700 hover:text-blue-800 transition duration-200"
@@ -38,6 +43,7 @@ function Header() {
                             <CreateShiftBtn onClick={toggleOverlay} />
                         
                             {showOverlay && (
+                                
                                     <div className='overlay' onClick={toggleOverlay}>
                                     <div onClick={e => e.stopPropagation()}>
                                         <SubmitShifts method="create" onClose={toggleOverlay} initialData={null}/>

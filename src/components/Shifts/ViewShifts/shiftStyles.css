@@ -9,20 +9,10 @@
     border-radius: 12px;
     box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
 }
-.buttonStyle {
-    background-color: #0e5aff; /* blue */
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-}
-button {
-    background-color: black;
-    color: white;
-    padding: 12px 20px;
-    border-color: white;
-    border-radius: 8px;
-    gap: 10px;
-}
+body.lock-scroll {
+    overflow: hidden;
+  }
+
 p {
     font-size: 18px;
     line-height: 1.6;

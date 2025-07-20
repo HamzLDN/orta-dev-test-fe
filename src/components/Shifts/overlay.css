@@ -1,13 +1,17 @@
-
+.sticky-nav {
+    position: fixed;
+    width: 100%;
+}
 .overlay {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 80%;
+    width: 60%;
     height: 80%;
     background-color: rgba(0, 0, 0,1);
     transform: translate(-50%, -50%);
     overflow-y: auto;
+    
   }
   
 input {
