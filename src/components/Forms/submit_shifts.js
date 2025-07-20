@@ -3,15 +3,13 @@ import TokenContext from "../../context/TokenContext";
 import createForm from '../crud/create';
 import editForm from '../crud/edit'
 import axios from "../../Axios/axios";
-
-export default function SubmitShifts({method}) {
-  const { userToken, user } = useContext(TokenContext);
-  const [_, setShowOverlay] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [shifts, setShifts] = useState([]);
-  const [formData, setFormData] = useState({
-    location: '',
+const defaultForm = {
+    location: {
+        name: '',
+        postCode: '',
+        constituency: '',
+        adminDistrict: '',
+    },
     title: '',
     role: '',
     typeOfShift: '',
@@ -19,6 +17,15 @@ export default function SubmitShifts({method}) {
     finishTime: '',
     numOfShiftsPerDay: '',
     date: '',
+  }
+export default function SubmitShifts({method, onClose, initialData}) {
+  const [_, setShowOverlay] = useState(null);
+
+  const [formData, setFormData] = useState(() => {
+    if (method === 'edit' && initialData) {
+      return { ...defaultForm, ...initialData };
+    }
+    return defaultForm;
   });
     
   const toggleOverlay = () => {
@@ -26,12 +33,25 @@ export default function SubmitShifts({method}) {
   };
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+  
+    if (name.includes('.')) {
+      const [parentKey, childKey] = name.split('.');
+  
+      setFormData(prev => ({
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value,
+        },
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -47,36 +67,9 @@ export default function SubmitShifts({method}) {
     }
   };
   useEffect(() => {
-    const fetchShifts = async () => {
-      setLoading(true);
-      setError(null);
-
-        setError("Not authenticated");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const { data } = await axios.get("/shifts", {
-          params: { userId: user._id },
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        setShifts(data);
-      } catch (err) {
-        console.error(err);
-        setError(
-          err.response?.data?.message || err.message || "Failed to load shifts"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchShifts();
-  }, [userToken, user]);
-  
+    setFormData({ ...defaultForm, ...initialData });
+  }, [method, initialData]);
+  console.log(formData.title)
   return (
     <div>
       <button onClick={toggleOverlay} className="btn btn-primary">
@@ -90,16 +83,18 @@ export default function SubmitShifts({method}) {
             className="shift-form"
           >
             <br/>
-            <h2 style={{color: 'white'}}>{method} Shift</h2>
+            <h1>{method} Shift</h1>
             <br/>
             <br/>
-            <div key='Title'>
+            <h1>JOB TYPE</h1>
+
+            <div key='title'>
                 <label>
                     <h2 style={{color: 'white'}}>Title</h2>
                         <input
                         type='text'
                         name='title'
-                        value={method === "edit" ? formData.title : ""}
+                        value={formData.title ? formData.title : ""}
                         onChange={handleChange}
                         required
                         />
@@ -112,7 +107,7 @@ export default function SubmitShifts({method}) {
                         <input
                         type='text'
                         name='role'
-                        value={method === "edit" ? formData.role : ""}
+                        value={formData.role ? formData.role : ""}
                         onChange={handleChange}
                         required
                         />
@@ -125,7 +120,7 @@ export default function SubmitShifts({method}) {
                         <input
                         type='text'
                         name='typeOfShift'
-                        value={method === "edit" ? formData.typeOfShift : ""}
+                        value={formData.typeOfShift ? formData.typeOfShift : ""}
                         onChange={handleChange}
                         required
                         />
@@ -133,7 +128,7 @@ export default function SubmitShifts({method}) {
                     </label>
                 <br />
             </div>
-            <h1>Shift hours</h1>
+            <h1>SHIFT HOURS</h1>
             <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%'}}>
 
                 <div key='StartTime'>
@@ -142,7 +137,7 @@ export default function SubmitShifts({method}) {
                             <input
                             type='time'
                             name='startTime'
-                            value={method === "edit" ? formData.startTime : ""}
+                            value={formData.startTime ? formData.startTime : ""}
                             onChange={handleChange}
                             required
                             />
@@ -155,7 +150,7 @@ export default function SubmitShifts({method}) {
                         <input 
                         type="time"
                         name="finishTime"
-                        value={method === "edit" ? formData.finishTime : ""}
+                        value={formData.finishTime ? formData.finishTime : ""}
                         onChange={handleChange}
                         required>
 
@@ -171,7 +166,7 @@ export default function SubmitShifts({method}) {
                         <input
                         type='number'
                         name='numOfShiftsPerDay'
-                        value={method === "edit" ? formData.numOfShiftsPerDay : ""}
+                        value={formData.numOfShiftsPerDay ? formData.numOfShiftsPerDay : ""}
                         onChange={handleChange}
                         required
                         />
@@ -180,28 +175,69 @@ export default function SubmitShifts({method}) {
             </div>
             <div key='date'>
                 <label>
-                    <h2 style={{color: 'white'}}>Schedule a date</h2>
+                    <h2 style={{color: 'white'}}>Schedule a date{formData.date ? formData.date.slice(0, 10) : ''}</h2>
                         <input
                         type='date'
                         name='date'
-                        value={method === "edit" ? formData.date : ""}
+                        value={formData.date ? formData.date.slice(0, 10) : ''}
                         onChange={handleChange}
                         required
                         />
                     </label>
                 <br />
             </div>
-            
-            <div>
-            <h2 style={{color: 'white'}}>Location</h2>
-            <select name="location" id="location" value={formData.location} onChange={handleChange} required>
-                <option value="">Locations</option>
-                <option value="The Willow">The Willow</option>
-                <option value="Manchester Piccadilly Station">Manchester Piccadilly Station</option>
-                <option value="MediaCityUK">MediaCityUK</option>
-                <option value="Clippers House, Clippers Quay">Clippers House, Clippers Quay</option>
-                <option value="Old Trafford Stadium">Old Trafford Stadium</option>
-            </select>
+            <h1>GENERAL LOCATION INFORMATION</h1>
+            <div key='location'>
+                <label>
+                    <h2 style={{color: 'white'}}>Location</h2>
+                        <input
+                        type='text'
+                        name='location.name'
+                        value={formData.location.name ? formData.location.name : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='postCode'>
+                <label>
+                    <h2 style={{color: 'white'}}>Post Code</h2>
+                        <input
+                        type='text'
+                        name='location.postCode'
+                        value={formData.location.postCode ? formData.location.postCode : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='constituency'>
+                <label>
+                    <h2 style={{color: 'white'}}>Constituency</h2>
+                        <input
+                        type='text'
+                        name='location.constituency'
+                        value={formData.location.constituency ? formData.location.constituency : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='adminDistrict'>
+                <label>
+                    <h2 style={{color: 'white'}}>Admin District</h2>
+                        <input
+                        type='text'
+                        name='location.adminDistrict'
+                        value={formData.location.adminDistrict ? formData.location.adminDistrict : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
             </div>
             <button style={{backgroundColor: 'white', padding: '10px'}} type="submit">Submit</button>
           </form>
