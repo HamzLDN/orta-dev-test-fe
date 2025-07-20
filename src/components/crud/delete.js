@@ -1,4 +1,4 @@
-function deleteShift(id) {
+async function deleteShift(id) {
     // It sends a DELETE request to the API endpoint with the shift ID
     fetch(`http://localhost:8000/api/shifts/${id}`, {
         method: "DELETE",
