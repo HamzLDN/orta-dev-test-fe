@@ -4,6 +4,8 @@ import axios from "../../Axios/axios"; // your configured instance
 import TokenContext from "../../context/TokenContext";
 import Table from "./Table/Table.module.css"; 
 import deleteShift from "../crud/delete"
+import SubmitShifts from '../../components/Forms/submit_shifts.js';
+import './overlay.css';
 
 function getShiftStatus(startTime, finishTime, date) {
   const now = new Date();
@@ -30,17 +32,18 @@ function getShiftStatus(startTime, finishTime, date) {
 
 
 export default function Shifts() {
+  const [editShiftId, setEditShiftId] = useState(null);
+  const openOverlay = (id) => setEditShiftId(id);
+  const closeOverlay = () => setEditShiftId(null);
+
   function modifyshifts(id, method) {
     // on click if user clicks on delete send to endpoint /api/shifts:id
     if (method==="delete") {
-      deleteShift(id)
-      setShifts(prevShifts => prevShifts.filter(shift => shift._id !== id));
-      
-    } else if (method==="edit") {
-      console.log("Edit shift:", id);
-      // Handle edit logic here, e.g., open a modal with a form to edit the shift
+      if (deleteShift(id)) setShifts(prevShifts => prevShifts.filter(shift => shift._id !== id));
+      console.log("Shift deleted", id);
     }
   }
+
   const { userToken, user } = useContext(TokenContext);
   const [shifts, setShifts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -115,17 +118,44 @@ export default function Shifts() {
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>
-                    <button
+                    
+                    {/* <button
                       onClick={() => {
-                        // Handle edit shift
-                       
+                        {showOverlay && (
+                          <div onClick={toggleOverlay}>
+                             <SubmitShifts method="edit" />
+                          </div>
+                      )}
                         {modifyshifts(shift._id, "edit")}
                         console.log("Shifts edited", shift._id);
                       }}
                       style={{ marginRight: "0.5rem", backgroundColor: "#4CAF50", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
+                    > */}
+                    <button 
+                      onClick={() => openOverlay(shift._id)} 
+                      style={{ 
+                        marginRight: "0.5rem", 
+                        backgroundColor: "#4CAF50", 
+                        color: "white", 
+                        border: "none", 
+                        padding: "0.5rem 1rem", 
+                        borderRadius: "4px" 
+                      }}
                     >
                       Edit
                     </button>
+                                            
+                    {editShiftId === shift._id && (
+                      <div className="overlay" onClick={closeOverlay}>
+                        <div onClick={e => e.stopPropagation()}>
+                          <SubmitShifts  method="edit"  onClose={closeOverlay} initialData={shift} 
+                          />
+                        </div>
+                      </div>
+                    )}
+
+
+
                     <button
                       onClick={() => {
                         // Handle delete shift
@@ -136,6 +166,8 @@ export default function Shifts() {
                     >
                       Delete
                     </button>
+                    
+                    
                   </td>
                 </tr>
               
