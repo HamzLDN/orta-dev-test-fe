@@ -111,6 +111,7 @@ export default function Shifts() {
               <th>Post Code</th>
               <th>Status</th>
               <th>Actions</th>
+              <th>View Shift</th>
             </tr>
             
             {shifts.map((shift) => (
@@ -159,16 +160,46 @@ export default function Shifts() {
                         {modifyshifts(shift._id, "delete")}
                         console.log("Delete shift:", shift._id);
                       }}
-                      style={{ backgroundColor: "#f44336", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px", width: '100px' }}
+                      style={{ 
+                        backgroundColor: "#f44336", 
+                        color: "white",
+                        border: "none", 
+                        padding: "0.5rem 1rem", 
+                        borderRadius: "4px", 
+                        width: '70%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                      }}
                     >
                       Delete
                     </button>
-                    <Link to={`/viewshift?id=${shift._id}&userId=${user._id}`}>View Shift</Link>
+
+
+                    
+                    
 
 
                     
                     
                   </td>
+                  <td>
+                      <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: 'black',
+                      color: 'white',
+                      padding: '10px',
+                      borderRadius: '5px',
+                      border: '1px solid white',
+                      marginTop: '10px',
+                      width: '85%'
+
+                      }}>
+                    <Link to={`/viewshift?id=${shift._id}&userId=${user._id}`}>View</Link>
+                    </div>
+                    </td>
                 </tr>
               
             ))}
