@@ -1,12 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import createForm from '../crud/create';
 import editForm from '../crud/edit'
+
 const defaultForm = {
     location: {
         name: '',
         postCode: '',
         constituency: '',
         adminDistrict: '',
+        cordinates: {
+            longitude: '',
+            latitude: '',
+            useRotaCloud: false,
+        }
     },
     title: '',
     role: '',
@@ -54,11 +60,19 @@ export default function SubmitShifts({method, onClose, initialData}) {
     e.preventDefault();
     try {
         if (method === 'create') {
-            await createForm(formData, toggleOverlay, setFormData, formData);
-            // window.location.reload(false);
+            let confirmation = window.confirm("Are you sure you want to create this shift?");
+            if (confirmation) {
+                await createForm(formData, toggleOverlay, setFormData, formData);
+                // window.location.reload(false);
+            }
+            
         } else if (method === 'edit') {
-            await editForm(formData, toggleOverlay, setFormData, formData);
-            window.location.reload(false);
+            let confirmation = window.confirm("Are you sure you want to edit this shift?");
+            if (confirmation) {
+
+                await editForm(formData, toggleOverlay, setFormData, formData);
+                // window.location.reload(false);
+            }
         }
     } catch (err) {
       console.error('POST error:', err);
