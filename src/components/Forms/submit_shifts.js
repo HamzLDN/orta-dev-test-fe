@@ -82,9 +82,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
             onSubmit={handleSubmit}
             className="shift-form"
           >
-            <br/>
             <h1>{method} Shift</h1>
-            <br/>
             <br/>
             <h1>JOB TYPE</h1>
 
