@@ -39,7 +39,7 @@ function Header() {
                             {showOverlay && (
                                     <div className='overlay' onClick={toggleOverlay}>
                                     <div onClick={e => e.stopPropagation()}>
-                                        <SubmitShifts method="create" onClose={toggleOverlay} />
+                                        <SubmitShifts method="create" onClose={toggleOverlay} initialData={null}/>
                                     </div>
                                     </div>
                                 )}
