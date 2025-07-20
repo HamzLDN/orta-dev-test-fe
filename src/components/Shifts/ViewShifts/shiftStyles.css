@@ -1,0 +1,64 @@
+
+.viewshift-container {
+    width: 50%;
+    margin: 40px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+.buttonStyle {
+    background-color: #0e5aff; /* blue */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+button {
+    background-color: black;
+    color: white;
+    padding: 12px 20px;
+    border-color: white;
+    border-radius: 8px;
+    gap: 10px;
+}
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 10px 0;
+    color: #555; /* softer text color */
+}
+.sectionStyle {
+    margin-bottom: 30px;
+    padding: 20px 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s ease;
+}
+
+.sectionStyle:hover {
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+
+.titleStyle {
+    color: #1e293b; /* dark blue */
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    border-bottom: 2px solid #cbd5e1; /* light gray */
+    padding-bottom: 6px;
+}
+
+.sectionStyle p {
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 6px 0;
+}
+
+.sectionStyle p strong {
+    color: #334155; /* slightly darker text */
+    min-width: 110px;
+    display: inline-block;
+}
