@@ -1,11 +1,12 @@
-// src/components/Shifts/Shifts.jsx
+// src/components/EditShifts/Shifts.jsx
 import React, { useEffect, useState, useContext } from "react";
-import axios from "../../Axios/axios"; // your configured instance
-import TokenContext from "../../context/TokenContext";
-import Table from "./Table/Table.module.css"; 
-import deleteShift from "../crud/delete"
-import SubmitShifts from '../../components/Forms/submit_shifts.js';
-import './overlay.css';
+import { Link } from 'react-router-dom';
+import axios from "../../../Axios/axios.js"; // your configured instance
+import TokenContext from "../../../context/TokenContext.js";
+import Table from "../Table/Table.module.css"; 
+import deleteShift from "../../crud/delete.js"
+import SubmitShifts from '../../Forms/submit_shifts.js';
+import '../overlay.css';
 
 function getShiftStatus(startTime, finishTime, date) {
   const now = new Date();
@@ -35,17 +36,26 @@ export default function Shifts() {
   const [editShiftId, setEditShiftId] = useState(null);
   const openOverlay = (id) => setEditShiftId(id);
   const closeOverlay = () => setEditShiftId(null);
-
+  const [shifts, setShifts] = useState([]);
   function modifyshifts(id, method) {
     // on click if user clicks on delete send to endpoint /api/shifts:id
     if (method==="delete") {
-      if (deleteShift(id)) setShifts(prevShifts => prevShifts.filter(shift => shift._id !== id));
-      console.log("Shift deleted", id);
+      const confirmed = window.confirm(`Are you sure you want to ${method} it?`);
+      
+      if (confirmed) {
+        
+        const deleted = deleteShift(id);
+        if (deleted) 
+          {
+            setShifts(prevShifts => prevShifts.filter(shift => shift._id !== id));
+            console.log("Shift deleted", id);
+          }  // now we can confirm that the user deleted the shift
+      }
     }
   }
 
   const { userToken, user } = useContext(TokenContext);
-  const [shifts, setShifts] = useState([]);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -118,19 +128,6 @@ export default function Shifts() {
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>
-                    
-                    {/* <button
-                      onClick={() => {
-                        {showOverlay && (
-                          <div onClick={toggleOverlay}>
-                             <SubmitShifts method="edit" />
-                          </div>
-                      )}
-                        {modifyshifts(shift._id, "edit")}
-                        console.log("Shifts edited", shift._id);
-                      }}
-                      style={{ marginRight: "0.5rem", backgroundColor: "#4CAF50", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
-                    > */}
                     <button 
                       onClick={() => openOverlay(shift._id)} 
                       style={{ 
@@ -162,10 +159,13 @@ export default function Shifts() {
                         {modifyshifts(shift._id, "delete")}
                         console.log("Delete shift:", shift._id);
                       }}
-                      style={{ backgroundColor: "#f44336", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px" }}
+                      style={{ backgroundColor: "#f44336", color: "white", border: "none", padding: "0.5rem 1rem", borderRadius: "4px", width: '100px' }}
                     >
                       Delete
                     </button>
+                    <Link to={`/viewshift?id=${shift._id}&userId=${user._id}`}>View Shift</Link>
+
+
                     
                     
                   </td>
