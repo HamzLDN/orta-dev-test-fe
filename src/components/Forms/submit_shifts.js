@@ -75,7 +75,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
 
       {(
         <div className="overlay" onClick={toggleOverlay}>
-          <form
+          <form data-testid="shift-form"
             onClick={e => e.stopPropagation()}
             onSubmit={handleSubmit}
             className="shift-form"
