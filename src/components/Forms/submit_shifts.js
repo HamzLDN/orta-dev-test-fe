@@ -235,7 +235,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
                     </label>
                 <br />
             </div>
-            <button style={{backgroundColor: 'white', padding: '10px'}} type="submit">Submit</button>
+            <button style={{backgroundColor: 'white', padding: '10px', color: 'black'}} type="submit">Submit</button>
           </form>
         </div>
       )}
