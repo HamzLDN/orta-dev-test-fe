@@ -8,7 +8,6 @@ const createShift = async (formData, toggleOverlay, setFormData, data_to_submit)
         },
         body: JSON.stringify(formData),
       });
-  
       if (res.ok) {
         alert('Shift created!');
         if (typeof toggleOverlay === 'function') toggleOverlay();
@@ -18,7 +17,7 @@ const createShift = async (formData, toggleOverlay, setFormData, data_to_submit)
         alert(data.message);
       }
     } catch (error) {
-      console.error('Error creating shift:', error);
+      console.log('Error creating shift:', error);
       alert('An unexpected error occurred');
     }
   };
