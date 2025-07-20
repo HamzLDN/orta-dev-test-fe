@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import './shiftStyles.css'
+import './shiftStyles.css';
+import deleteShift from '../../crud/delete.js';
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -78,6 +80,22 @@ function ViewShift() {
         <p><strong>Post Code:</strong> {shift.location?.postCode}</p>
         <p><strong>Constituency:</strong> {shift.location?.constituency}</p>
         <p><strong>Admin District:</strong> {shift.location?.adminDistrict}</p>
+      </section>
+
+      <section className='sectionStyle'>
+        <h2 className='titleStyle'>Delete</h2>
+        <button
+            onClick={async () => {
+                const success = await deleteShift(id);
+                if (success) {
+                window.location.href = "/";
+                } else {
+                alert("Failed to delete shift.");
+                }
+            }}
+            >
+            DELETE SHIFT
+            </button>
       </section>
     </div>
   );
