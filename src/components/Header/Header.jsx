@@ -5,6 +5,7 @@ import TokenContext from '../../context/TokenContext.js';
 import SubmitShifts from '../../components/Forms/submit_shifts.js';
 import React, { useContext, useState } from 'react';
 import "../Shifts/overlay.css"
+import ViewShift from '../Shifts/ViewShifts/ViewShifts.jsx';
 function Header() {
     const [showOverlay, setShowOverlay] = useState(false);
     const toggleOverlay = () => {
