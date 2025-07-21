@@ -8,6 +8,7 @@ const defaultForm = {
         postCode: '',
         constituency: '',
         adminDistrict: '',
+        distance: '',
         cordinates: {
             longitude: '',
             latitude: '',
@@ -37,25 +38,24 @@ export default function SubmitShifts({method, onClose, initialData}) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const keys = name.split(".");
+    const finalValue = type === "checkbox" ? checked : value;
   
-    if (name.includes('.')) {
-      const [parentKey, childKey] = name.split('.');
+    setFormData(prev => {
+      const updated = { ...prev };
+      let current = updated;
   
-      setFormData(prev => ({
-        ...prev,
-        [parentKey]: {
-          ...prev[parentKey],
-          [childKey]: value,
-        },
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]]) current[keys[i]] = {};
+        current = current[keys[i]];
+      }
+  
+      current[keys[keys.length - 1]] = finalValue;
+      return updated;
+    });
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -249,7 +249,59 @@ export default function SubmitShifts({method, onClose, initialData}) {
                     </label>
                 <br />
             </div>
-            <button style={{backgroundColor: 'white', padding: '10px', color: 'black'}} type="submit">Submit</button>
+            <div key='longitude'>
+                <label>
+                    <h2 style={{color: 'white'}}>Longitude</h2>
+                        <input
+                        type='number'
+                        name='location.cordinates.longitude'
+                        value={formData.location.cordinates.longitude ? formData.location.cordinates.longitude : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='latitude'>
+                <label>
+                    <h2 style={{color: 'white'}}>Latitude</h2>
+                        <input
+                        type='number'
+                        name='location.cordinates.latitude'
+                        value={formData.location.cordinates.latitude ? formData.location.cordinates.latitude : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='distance'>
+                <label>
+                    <h2 style={{color: 'white'}}>Distance</h2>
+                        <input
+                        type='number'
+                        name='location.distance'
+                        value={formData.location.distance ? formData.location.distance : ""}
+                        onChange={handleChange}
+                        required
+                        />
+                    </label>
+                <br />
+            </div>
+            <div key='useRotaCloud'>
+                <label>
+                    <center><h2 style={{color: 'white'}}>Use RotaCloud</h2></center>
+                        <input
+                        type='checkbox'
+                        name='location.cordinates.useRotaCloud'
+                        checked={formData.location.cordinates.useRotaCloud}
+                        onChange={(e) => handleChange({ target: { name: 'location.cordinates.useRotaCloud', value: e.target.checked } })}
+                        />
+                    </label>
+                <br />
+            </div>
+
+            <center><button style={{backgroundColor: 'white', padding: '10px', color: 'black'}} type="submit">Submit</button></center>
           </form>
         </div>
       )}
