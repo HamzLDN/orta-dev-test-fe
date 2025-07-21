@@ -8,6 +8,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 git clone --branch feature/shift-crud --single-branch https://github.com/HamzLDN/orta-dev-test-fe.git
 cd orta-dev-test-fe
 ```
+Lets install the packages
+```bash
+npm install
+```
 
 ## Environment configuration
 MAKE A FILE CALLED: .env.local
