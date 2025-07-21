@@ -19,6 +19,9 @@ cd orta-dev-test-fe
 ## View
 <img src="readmeImages/View.png" width="500" />
 
+## Trade-Off with React
+Routing, state, and data fetching are all things you have to choose and build yourself, which adds setup complexity and potential for errors.
+
 
 ## Available Scripts
 
