@@ -34,11 +34,13 @@ function getShiftStatus(startTime, finishTime, date) {
 
 export default function Shifts() {
   const [editShiftId, setEditShiftId] = useState(null);
+  // This will open the overlay and set the setEditShiftId function to the id of the shift being edited
   const openOverlay = (id) => {
     setEditShiftId(id);
     document.body.classList.add('lock-scroll');
   };
   
+  // This will close the overlay and remove the lock-scroll class from the body
   const closeOverlay = () => {
     setEditShiftId(null);
     document.body.classList.remove('lock-scroll');
@@ -132,7 +134,7 @@ export default function Shifts() {
                   <td>{shift.location?.name}{" "}</td>
                   <td>{shift.location?.postCode ? `(${shift.location.postCode})` : ""}</td>
                   <td>{getShiftStatus(shift.startTime, shift.finishTime, shift.date).status}
-                    <div style={{padding: "5px", backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
+                    <div style={{position: 'relative', top: '2px', padding: "10px",borderRadius: '10px', backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>

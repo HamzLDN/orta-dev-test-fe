@@ -10,6 +10,7 @@ const edit = async (formData, toggleOverlay, setFormData, data_to_submit) => {
         });
 
         if (res.ok) {
+            // Shift updated successfully
             alert('Shift updated!');
             if (typeof toggleOverlay === 'function') toggleOverlay();
             if (typeof setFormData === 'function') setFormData(data_to_submit);
@@ -18,6 +19,7 @@ const edit = async (formData, toggleOverlay, setFormData, data_to_submit) => {
             alert(data.message);
         }
     } catch (error) {
+        // handle network errors or unexpected issues
         console.error('Error updating shift:', error);
         alert('An unexpected error occurred');
     }
