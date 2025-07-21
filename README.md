@@ -10,7 +10,7 @@ cd orta-dev-test-fe
 ```
 
 ## Environment configuration
-.env.local
+MAKE A FILE CALLED: .env.local
 ```bash
 REACT_APP_BACKEND_URL_LOCAL=<LOCAL>
 REACT_APP_BACKEND_URL_PROD=<PROD>
