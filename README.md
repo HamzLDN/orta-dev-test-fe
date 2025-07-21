@@ -9,6 +9,13 @@ git clone --branch feature/shift-crud --single-branch https://github.com/HamzLDN
 cd orta-dev-test-fe
 ```
 
+## Environment configuration
+```bash
+REACT_APP_BACKEND_URL_LOCAL=<LOCAL>
+REACT_APP_BACKEND_URL_PROD=<PROD>
+REACT_APP_ENVIRONMENT=development
+```
+
 # Visuals
 ## Dashboard
 <img src="readmeImages/Dashboard.png" width="500" />
