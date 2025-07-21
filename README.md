@@ -9,8 +9,12 @@ git clone --branch feature/shift-crud --single-branch https://github.com/HamzLDN
 cd orta-dev-test-fe
 ```
 
-## Visuals
+# Visuals
+## Dashboard
 <img src="readmeImages/Dashboard.png" width="600" />
+
+## Form
+<img src="readmeImages/Dashboard.png" width="400" />
 
 
 ## Available Scripts

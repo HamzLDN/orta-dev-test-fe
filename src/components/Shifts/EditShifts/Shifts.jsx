@@ -134,7 +134,7 @@ export default function Shifts() {
                   <td>{shift.location?.name}{" "}</td>
                   <td>{shift.location?.postCode ? `(${shift.location.postCode})` : ""}</td>
                   <td>{getShiftStatus(shift.startTime, shift.finishTime, shift.date).status}
-                    <div style={{position: 'relative', top: '2px', padding: "10px",borderRadius: '10px', backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
+                    <div style={{padding: "10px",borderRadius: '10px', backgroundColor: getShiftStatus(shift.startTime, shift.finishTime, shift.date).colour, width: '10px', height: '10px', float: 'right'}}></div>
                   </td>
                   {/* STATUS WLL BE EITHER pending inprogress complete */}
                   <td>
