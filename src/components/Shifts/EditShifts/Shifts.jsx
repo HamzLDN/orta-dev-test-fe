@@ -184,16 +184,16 @@ export default function Shifts() {
                   </td>
                   <td>
                       <div style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'black',
-                      color: 'white',
-                      padding: '10px',
-                      borderRadius: '5px',
-                      border: '1px solid white',
-                      marginTop: '10px',
-                      width: '85%'
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'black',
+                        color: 'white',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        border: '1px solid white',
+                        marginTop: '10px',
+                        width: '85%'
 
                       }}>
                     <Link to={`/viewshift?id=${shift._id}&userId=${user._id}`}>View</Link>
