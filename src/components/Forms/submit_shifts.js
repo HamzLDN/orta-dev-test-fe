@@ -63,7 +63,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
             let confirmation = window.confirm("Are you sure you want to create this shift?");
             if (confirmation) {
                 await createForm(formData, toggleOverlay, setFormData, formData);
-                // window.location.reload(false);
+                window.location.reload(false);
             }
             
         } else if (method === 'edit') {
@@ -71,7 +71,7 @@ export default function SubmitShifts({method, onClose, initialData}) {
             if (confirmation) {
 
                 await editForm(formData, toggleOverlay, setFormData, formData);
-                // window.location.reload(false);
+                window.location.reload(false);
             }
         }
     } catch (err) {
