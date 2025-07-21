@@ -50,7 +50,7 @@ function ViewShift() {
     <div>
         <br/>
       <nav>
-        <Link to={`/`} className='buttonStyle'>MAIN PAGE</Link>
+        <Link to={`/`} className='buttonStyle' style={{backgroundColor: '#3b82f6'}}>MAIN PAGE</Link>
       </nav>
       <br/>
 
@@ -68,9 +68,9 @@ function ViewShift() {
         <p><strong>Date:</strong> {formatDate(shift.date)}</p>
         <p><strong>Start:</strong> {shift.startTime}</p>
         <p><strong>Finish:</strong> {shift.finishTime}</p>
-        <button>CLOCK IN</button>
+        <button className='buttonStyle' style={{backgroundColor: 'black'}}>CLOCK IN</button>
         &nbsp;
-        <button>CLOCK OUT</button>
+        <button className='buttonStyle'style={{backgroundColor: 'black'}}>CLOCK OUT</button>
       </section>
 
       {/* location */}
@@ -80,11 +80,17 @@ function ViewShift() {
         <p><strong>Post Code:</strong> {shift.location?.postCode}</p>
         <p><strong>Constituency:</strong> {shift.location?.constituency}</p>
         <p><strong>Admin District:</strong> {shift.location?.adminDistrict}</p>
+        <p><strong>Distance:</strong> {shift.location?.distance}</p>
+        <br/>
+        <h2 className='titleStyle'>Coordindates</h2>
+        <p><strong>Latitude:</strong> {shift.location?.cordinates?.latitude}</p>
+        <p><strong>Longitude:</strong> {shift.location?.cordinates?.longitude}</p>
+
       </section>
 
       <section className='sectionStyle'>
         <h2 className='titleStyle'>Delete</h2>
-        <button
+        <button style={{backgroundColor: 'red'}} className='buttonStyle'
             onClick={async () => {
                 const success = await deleteShift(id);
                 if (success) {
