@@ -11,10 +11,13 @@ cd orta-dev-test-fe
 
 # Visuals
 ## Dashboard
-<img src="readmeImages/Dashboard.png" width="600" />
+<img src="readmeImages/Dashboard.png" width="500" />
 
 ## Form
-<img src="readmeImages/Dashboard.png" width="400" />
+<img src="readmeImages/Form.png" width="500" />
+
+## View
+<img src="readmeImages/View.png" width="500" />
 
 
 ## Available Scripts
