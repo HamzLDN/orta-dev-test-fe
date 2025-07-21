@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How to Install
+
+```bash
+git clone --branch feature/shift-crud --single-branch https://github.com/HamzLDN/orta-dev-test-fe.git
+cd orta-dev-test-fe
+```
+
+## Visuals
+<img src="readmeImages/Dashboard.png" width="600" />
+
+
 ## Available Scripts
 
 In the project directory, you can run:
